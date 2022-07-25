@@ -28,19 +28,17 @@
  *                                                    //  Ask her again.';
  */
 
-const willYouMarryMe = function (answer) {
-  return new Promise((resolve, reject) => {
-    if (typeof answer === 'boolean') {
-      if (answer === true) {
-        resolve('Hooray!!! She said "Yes"!');
-      } else {
-        resolve('Oh no, she said "No".');
-      }
+const willYouMarryMe = (answer) => new Promise((resolve, reject) => {
+  if (typeof answer === 'boolean') {
+    if (answer === true) {
+      resolve('Hooray!!! She said "Yes"!');
     } else {
-      reject(Error('Wrong parameter is passed! Ask her again.'));
+      resolve('Oh no, she said "No".');
     }
-  });
-};
+  } else {
+    reject(Error('Wrong parameter is passed! Ask her again.'));
+  }
+});
 
 /**
  * Return Promise object that should be resolved with array containing plain values.

@@ -60,19 +60,15 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom(...args) {
-  let sum = 0;
-  // console.log(...args);
   return (x) => {
-    // console.log(x);
+    let sum = 0;
     if (args.length === 0) {
       return null;
     }
-    const revArr = args.reverse();
-    revArr.forEach((a, i) => {
-      sum += a * x ** i;
+    args.forEach((a, i, arr) => {
+      sum += a * x ** (arr.length - (i + 1));
       return sum;
     });
-    // console.log(sum);
     return sum;
   };
 }

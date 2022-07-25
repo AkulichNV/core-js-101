@@ -403,18 +403,17 @@ function toNaryString(num, n) {
  */
 function getCommonDirectoryPath(/* pathes */) {
   // let commonStr = '';
-  // for (let i = 0; i < pathes.length - 1; i += 0) {
-  //   const str = pathes[i];
-  //   const nextStr = pathes[i + 1];
-  //   for (let j = 0; j < str.length; j += 1) {
-  //     if (nextStr.indexOf(str[i] === i)) {
-  //       commonStr += str[i];
-  //     } else {
-  //       break;
+  // commonStr = pathes.reduce((a, b) => (a.length <= b.length ? a : b));
+  // for (let i = commonStr.length - 1; i >= 0; i -= 0) {
+  //   const someStr = commonStr.slice(0, i);
+  //   pathes.forEach((el) => {
+  //     const str = el.slice(0, someStr.length);
+  //     if (str === someStr) {
+  //       return someStr;
   //     }
-  //   }
+  //   });
   // }
-  // return commonStr;
+  // return someStr;
   throw new Error('Not implemented');
 }
 

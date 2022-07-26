@@ -105,17 +105,31 @@ function getFastestPromise(array) {
  *    });
  *
  */
-function promiseAllReduce(values) {
-  // eslint-disable-next-line max-len
-  return values.reduce((accumulator, value) => accumulator.then((results) => Promise.resolve(value).then((result) => [...results, result])), Promise.resolve([]));
+
+function promiseAllIterative(values) {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    let completed = 0;
+    values.forEach((value, index) => {
+      Promise.resolve(value).then((result) => {
+        results[index] = result;
+        completed += 1;
+
+        if (completed === values.length) {
+          resolve(results);
+        }
+      }).catch((err) => reject(err));
+    });
+  });
 }
 
 function chainPromises(array, action) {
-  return new Promise((resolve) => {
-    promiseAllReduce(array).then((res) => {
-      const val = res.reduce(action);
-      resolve(val);
-    });
+  return new Promise((resolve, reject) => {
+    resolve(promiseAllIterative(array)
+      .then((res) => {
+        const val = res.reduce(action);
+        return val;
+      }).catch((err) => reject(err)));
   });
 }
 

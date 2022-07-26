@@ -401,20 +401,28 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  // let commonStr = '';
-  // commonStr = pathes.reduce((a, b) => (a.length <= b.length ? a : b));
-  // for (let i = commonStr.length - 1; i >= 0; i -= 0) {
-  //   const someStr = commonStr.slice(0, i);
-  //   pathes.forEach((el) => {
-  //     const str = el.slice(0, someStr.length);
-  //     if (str === someStr) {
-  //       return someStr;
-  //     }
-  //   });
-  // }
-  // return someStr;
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let commonStr = '';
+  commonStr = pathes.reduce((a, b) => (a.length <= b.length ? a : b));
+  // eslint-disable-next-line consistent-return
+  pathes.forEach((el) => {
+    let str = el.slice(0, commonStr.length);
+    if (str === commonStr) {
+      return commonStr;
+    }
+    for (let i = commonStr.length - 1; i >= 0; i -= 1) {
+      commonStr = commonStr.slice(0, i);
+      str = str.slice(0, i);
+      if (str === commonStr) {
+        return commonStr;
+      }
+    }
+  });
+  if (commonStr.length !== 0) {
+    const i = commonStr.lastIndexOf('/');
+    commonStr = commonStr.slice(0, i + 1);
+  }
+  return commonStr;
 }
 
 /**
